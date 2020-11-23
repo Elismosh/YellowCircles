@@ -10,6 +10,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.pt = False
         self.pushButton.clicked.connect(self.paint)
         self.pushButton.setStyleSheet('QPushButton {background-color: #e32636; color: white; font-size: 17px;}')
 
@@ -21,13 +22,15 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         qp.drawEllipse(x, y, d, d)
 
     def paint(self):
+        self.pt = True
         self.repaint()
 
     def paintEvent(self, event):
-        qp = QPainter()
-        qp.begin(self)
-        self.run(qp)
-        qp.end()
+        if self.pt:
+            qp = QPainter()
+            qp.begin(self)
+            self.run(qp)
+            qp.end()
 
 
 if __name__ == '__main__':
